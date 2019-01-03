@@ -1,0 +1,77 @@
+package krpc.client.services;
+
+import com.google.protobuf.ByteString;
+
+import krpc.client.Connection;
+import krpc.client.Encoder;
+import krpc.client.RemoteEnum;
+import krpc.client.RemoteObject;
+import krpc.client.RPCInfo;
+import krpc.client.RPCException;
+import krpc.client.Types;
+
+public class Trajectories {
+
+    public static Trajectories newInstance(Connection connection) {
+        return new Trajectories(connection);
+    }
+
+    private Connection connection;
+
+    private Trajectories(Connection connection) {
+        this.connection = connection;
+    }
+
+    private void addExceptionTypes(Connection connection) {
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    @RPCInfo(service = "Trajectories", procedure = "GetImpactTime", types = _Types.class)
+    public double getImpactTime() throws RPCException {
+        ByteString _data = this.connection.invoke("Trajectories", "GetImpactTime");
+        return (double) Encoder.decode(_data, krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.DOUBLE), this.connection);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    @RPCInfo(service = "Trajectories", procedure = "HasImpact", types = _Types.class)
+    public boolean hasImpact() throws RPCException {
+        ByteString _data = this.connection.invoke("Trajectories", "HasImpact");
+        return (boolean) Encoder.decode(_data, krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.BOOL), this.connection);
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    @RPCInfo(service = "Trajectories", procedure = "ImpactPos", types = _Types.class)
+    public org.javatuples.Pair<Double,Double> impactPos() throws RPCException {
+        ByteString _data = this.connection.invoke("Trajectories", "ImpactPos");
+        return (org.javatuples.Pair<Double,Double>) Encoder.decode(_data, krpc.client.Types.createTuple(krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.DOUBLE),krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.DOUBLE)), this.connection);
+    }
+
+    public static class _Types {
+        public static krpc.schema.KRPC.Type getReturnType(String procedure) {
+            switch (procedure) {
+            case "GetImpactTime":
+                return krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.DOUBLE);
+            case "HasImpact":
+                return krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.BOOL);
+            case "ImpactPos":
+                return krpc.client.Types.createTuple(krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.DOUBLE),krpc.client.Types.createValue(krpc.schema.KRPC.Type.TypeCode.DOUBLE));
+            }
+            throw new IllegalArgumentException("Procedure '" + procedure +"' not found");
+        }
+
+        public static krpc.schema.KRPC.Type[] getParameterTypes(String procedure) {
+            switch (procedure) {
+            case "GetImpactTime":
+                return new krpc.schema.KRPC.Type[] {
+                };
+            case "HasImpact":
+                return new krpc.schema.KRPC.Type[] {
+                };
+            case "ImpactPos":
+                return new krpc.schema.KRPC.Type[] {
+                };
+            }
+            throw new IllegalArgumentException("Procedure '" + procedure +"' not found");
+        }
+    }
+}

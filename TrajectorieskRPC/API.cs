@@ -4,13 +4,15 @@ using KRPC.Service;
 using KRPC.Service.Attributes;
 using UnityEngine;
 
+using Tuple2 = System.Tuple<double, double>;
+
 namespace KRPC.Trajectories
 {
     [KRPCService(Name = "Trajectories", GameScene = GameScene.Flight)]
     public static class Service
     {
         [KRPCProcedure]
-        public static KRPC.Utils.Tuple<Double, Double> ImpactPos()
+        public static Tuple2 ImpactPos()
         {
             if (Available())
             {
@@ -21,7 +23,7 @@ namespace KRPC.Trajectories
                     var worldImpactPos = (Vector3d)impactVect + body.position;
                     var lat = body.GetLatitude(worldImpactPos);
                     var lng = DegreeFix(body.GetLongitude(worldImpactPos), -180);
-                    return new KRPC.Utils.Tuple<Double, Double>(lat, lng);
+                    return new Tuple2(lat, lng);
                 }
                 throw new Exception("Impact position is not available. Remember to check addons:tr:HasImpact");
             }
@@ -29,7 +31,7 @@ namespace KRPC.Trajectories
         }
 
         [KRPCProcedure]
-        public static Double GetImpactTime()
+        public static double GetImpactTime()
         {
             if (Available())
             {
